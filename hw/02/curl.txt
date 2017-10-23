@@ -1,0 +1,18 @@
+curl http://1-dot-mi-mdw-1071.appspot.com:80/protocol/welcome
+
+curl http://1-dot-mi-mdw-1071.appspot.com:80/protocol/welcome\?name\=luther -H "Accept: text/plain"
+
+
+curl http://1-dot-mi-mdw-1071.appspot.com:80/protocol/get\?name\=court -H "Accept: text/plain"
+
+curl http://1-dot-mi-mdw-1071.appspot.com:80/protocol/post\?name\=glop -X POST -H "Accept: text/plain" -H "Accept-Language: en-US" -H "Content-Length: 0"
+
+curl http://1-dot-mi-mdw-1071.appspot.com:80/protocol/referer\?name\=glop -X POST -H "Accept: text/html" -H "Accept-Language: en-US" -H "Content-Length: 0" -H "Referer: snm"
+
+curl http://1-dot-mi-mdw-1071.appspot.com:80/protocol/useragent\?name\=glop -X POST -H "Accept: text/html" -H "Accept-Language: en-US" -H "Content-Length: 0" -H "Referer: snm" -H "User-Agent: caught"
+
+curl http://1-dot-mi-mdw-1071.appspot.com:80/protocol/cookie\?name\=glop -X POST -H "Accept: text/html" -H "Accept-Language: en-US" -H "Content-Length: 0" -H "Referer: snm" -H "User-Agent: caught" -b "name=rejecting"
+
+curl http://1-dot-mi-mdw-1071.appspot.com:80/protocol/cookie -b "name=rejecting"
+
+curl http://1-dot-mi-mdw-1071.appspot.com:80/protocol/auth -H "Accept: text/html" -u "borrow:morning"

@@ -1,0 +1,9 @@
+telnet http://1-dot-mi-mdw-1071.appspot.com 80
+
+POST http://1-dot-mi-mdw-1071.appspot.com/httpTelnet2 HTTP/1.1
+Host: 1-dot-mi-mdw-1071.appspot.com
+Referer: mi-mdw
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 8
+
+data=fit
