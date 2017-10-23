@@ -34,7 +34,7 @@ public class Book extends HttpServlet {
 		              "<meta http-equiv=\"Content-Type\" content=\"text/html;charset=ISO-8859-1\"> \n" +
 		              "<title> Processing JSP </title> \n" +
 		            "</head> \n" +
-		            "<body> \n" +k
+		            "<body> \n" +
 		              "<a href=\"/mdw01-static\">Back</a>" + 
 		            "</body> \n" +
 		          "</html>"
