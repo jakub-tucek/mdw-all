@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         id="WebApp_ID" version="2.5">
+    <display-name>hw-03</display-name>
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.htm</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>default.html</welcome-file>
+        <welcome-file>default.htm</welcome-file>
+        <welcome-file>default.jsp</welcome-file>
+    </welcome-file-list>
+    <servlet>
+        <display-name>BookCreate</display-name>
+        <servlet-name>BookCreate</servlet-name>
+        <servlet-class>cvut.fit.servlets.BookCreate</servlet-class>
+    </servlet>
+    <servlet>
+        <display-name>BookPay</display-name>
+        <servlet-name>BookPay</servlet-name>
+        <servlet-class>cvut.fit.servlets.BookPay</servlet-class>
+    </servlet>
+    <servlet>
+        <display-name>BookComplete</display-name>
+        <servlet-name>BookComplete</servlet-name>
+        <servlet-class>cvut.fit.servlets.BookComplete</servlet-class>
+    </servlet>
+    <servlet>
+        <display-name>BookStatus</display-name>
+        <servlet-name>BookStatus</servlet-name>
+        <servlet-class>cvut.fit.servlets.BookStatus</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BookStatus</servlet-name>
+        <url-pattern>/book/status</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BookCreate</servlet-name>
+        <url-pattern>/book/create</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BookPay</servlet-name>
+        <url-pattern>/book/pay</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BookComplete</servlet-name>
+        <url-pattern>/book/complete</url-pattern>
+    </servlet-mapping>
+    <filter>
+        <filter-name>LogFilter</filter-name>
+        <filter-class>cvut.fit.servlets.LogFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LogFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+</web-app>
