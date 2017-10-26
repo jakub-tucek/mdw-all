@@ -1,6 +1,5 @@
 package cvut.fit.mdw.service;
 
-
 public enum  Currency {
     EUR(1.0), USD(0.846098), GBP(1.12008);
 
