@@ -2,4 +2,4 @@ target/**
 out/**
 .idea
 *.iml
-*.classes
+*.class
