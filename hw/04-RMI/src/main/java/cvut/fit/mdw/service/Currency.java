@@ -1,6 +1,8 @@
 package cvut.fit.mdw.service;
 
-public enum  Currency {
+import java.io.Serializable;
+
+public enum Currency implements Serializable {
     EUR(1.0), USD(0.846098), GBP(1.12008);
 
     /**

@@ -1,8 +1,11 @@
 package cvut.fit.mdw.service;
 
-@FunctionalInterface
-public interface CurrencyConverter {
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 
-    double convert(Currency from, Currency to, double amount);
+@FunctionalInterface
+public interface CurrencyConverter extends Remote  {
+
+    double convert(Currency from, Currency to, double amount) throws RemoteException ;
 
 }
