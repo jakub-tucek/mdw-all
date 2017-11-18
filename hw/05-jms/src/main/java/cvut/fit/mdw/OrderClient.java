@@ -22,7 +22,7 @@ public class OrderClient {
         new OrderClient().sendAll();
     }
 
-    public void sendAll() throws Exception {
+    private void sendAll() throws Exception {
         try {
             QueueSession qsession = queueWrapper.getQsession();
 
