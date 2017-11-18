@@ -1,4 +1,4 @@
-package cvut.fit.mdw;
+package cvut.fit.mdw.config;
 
 public class Config {
 
@@ -11,8 +11,8 @@ public class Config {
     // URL
     public final static String PROVIDER_URL = "t3://localhost:7001";
 
-    public final static String BOOKING_QUEUE = "jms/mdw-queue-booking";
-
-    public final static String CONFIRMATION_QUEUE = "jms/mdw-queue-confirmation";
+    public final static String ALL_ORDERS_QUEUE = "jms/mdw-queue-all-orders";
+    public final static String BOOKINGS_QUEUE = "jms/mdw-queue-bookings";
+    public final static String NEW_TRIPS_QUEUE = "jms/mdw-queue-new-trips";
 
 }

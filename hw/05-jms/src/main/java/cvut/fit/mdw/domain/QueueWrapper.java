@@ -1,6 +1,6 @@
 package cvut.fit.mdw.domain;
 
-import cvut.fit.mdw.Config;
+import cvut.fit.mdw.config.Config;
 
 import javax.jms.*;
 import javax.naming.Context;
