@@ -1,27 +1,15 @@
 package cz.fit.mdw;
 
-import javax.jms.*;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import java.util.Hashtable;
+import cz.fit.mdw.domain.ConsumerQueueWrapper;
+
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.MessageListener;
+import javax.jms.TextMessage;
 
 public class JMSConsumer implements MessageListener {
 
-    // connection factory
-    private QueueConnectionFactory qconFactory;
-
-    // connection to a queue
-    private QueueConnection qcon;
-
-    // session within a connection
-    private QueueSession qsession;
-
-    // queue receiver that receives a message to the queue
-    private QueueReceiver qreceiver;
-
-    // queue where the message will be sent to
-    private Queue queue;
+    private ConsumerQueueWrapper queueWrapper;
 
     // callback when the message exist in the queue
     public void onMessage(Message msg) {
@@ -32,45 +20,18 @@ public class JMSConsumer implements MessageListener {
             } else {
                 msgText = msg.toString();
             }
-            System.out.println("Message Received: " + msgText);
+            System.out.println("Confirmation Received: " + msgText);
         } catch (JMSException jmse) {
             System.err.println("An exception occurred: " + jmse.getMessage());
         }
     }
 
-    // create a connection to the WLS using a JNDI context
-    public void init(Context ctx, String queueName)
-            throws NamingException, JMSException {
-
-        qconFactory = (QueueConnectionFactory) ctx.lookup(Config.JMS_FACTORY);
-        qcon = qconFactory.createQueueConnection();
-        qsession = qcon.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
-        queue = (Queue) ctx.lookup(queueName);
-
-        qreceiver = qsession.createReceiver(queue);
-        qreceiver.setMessageListener(this);
-
-        qcon.start();
-    }
-
-    // close sender, connection and the session
-    public void close() throws JMSException {
-        qreceiver.close();
-        qsession.close();
-        qcon.close();
-    }
 
     // start receiving messages from the queue
     public void receive(String queueName) throws Exception {
-        Hashtable<String, String> env = new Hashtable<String, String>();
-        env.put(Context.INITIAL_CONTEXT_FACTORY, Config.JNDI_FACTORY);
-        env.put(Context.PROVIDER_URL, Config.PROVIDER_URL);
+        this.queueWrapper = new ConsumerQueueWrapper(this, queueName);
 
-        InitialContext ic = new InitialContext(env);
-
-        init(ic, queueName);
-
-        System.out.println("Connected to " + queue.toString() + ", receiving messages...");
+        System.out.println("Connected to " + this.queueWrapper.toString() + ", receiving messages...");
         try {
             synchronized (this) {
                 while (true) {
@@ -78,17 +39,17 @@ public class JMSConsumer implements MessageListener {
                 }
             }
         } finally {
-            close();
+            queueWrapper.close();
             System.out.println("Finished.");
         }
     }
 
     public static void main(String[] args) throws Exception {
         // input arguments
-        String queueName = "jms/mdw-queue" ;
+        String confirmationQueue = "jms/mdw-queue";
 
         // create the producer object and receive the message
         JMSConsumer consumer = new JMSConsumer();
-        consumer.receive(queueName);
+        consumer.receive(confirmationQueue);
     }
 }
