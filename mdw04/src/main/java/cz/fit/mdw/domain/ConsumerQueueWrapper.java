@@ -1,7 +1,5 @@
 package cz.fit.mdw.domain;
 
-import sun.misc.Queue;
-
 import javax.jms.JMSException;
 import javax.jms.MessageListener;
 import javax.jms.QueueReceiver;

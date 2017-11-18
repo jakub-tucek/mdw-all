@@ -1,9 +1,6 @@
 package cz.fit.mdw.domain;
 
-import sun.misc.Queue;
-
 import javax.jms.JMSException;
-import javax.jms.QueueReceiver;
 import javax.jms.QueueSender;
 
 public class ProducerQueueWrapper extends QueueWrapper {

@@ -11,4 +11,8 @@ public class Config {
     // URL
     public final static String PROVIDER_URL = "t3://localhost:7001";
 
+    public final static String BOOKING_QUEUE = "jms/mdw-queue-booking";
+
+    public final static String CONFIRMATION_QUEUE = "jms/mdw-queue-confirmation";
+
 }

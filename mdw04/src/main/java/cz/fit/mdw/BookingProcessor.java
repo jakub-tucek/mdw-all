@@ -8,40 +8,35 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
-public class BookingClient implements MessageListener {
+public class BookingProcessor implements MessageListener {
 
 
-    private ProducerQueueWrapper bookingQWrapper;
+    private ConsumerQueueWrapper bookingQWrapper;
 
-    private ConsumerQueueWrapper confirmQWrapper;
+    private ProducerQueueWrapper confirmQWrapper;
 
-
-    private boolean waitForConfirm = true;
 
     // sends the message to the queue
-    private void send() throws Exception {
+    private void send(String message) throws Exception {
         TextMessage msg = confirmQWrapper.getQsession().createTextMessage();
 
 
-        msg.setText("Request booking");
-        bookingQWrapper.getQsender().send(msg, DeliveryMode.PERSISTENT, 8, 0);
-        System.out.println("The booking message was sent to the destination " +
-                bookingQWrapper.getQsender().getDestination().toString());
+        msg.setText(message);
+        confirmQWrapper.getQsender().send(msg, DeliveryMode.PERSISTENT, 8, 0);
+        System.out.println("The confirm message was sent to the destination " +
+                confirmQWrapper.getQsender().getDestination().toString());
     }
 
     // start receiving messages from the queue
     private void receive() throws Exception {
-        this.bookingQWrapper = new ProducerQueueWrapper(Config.BOOKING_QUEUE);
-        this.confirmQWrapper = new ConsumerQueueWrapper(this, Config.CONFIRMATION_QUEUE);
+        this.bookingQWrapper = new ConsumerQueueWrapper(this, Config.BOOKING_QUEUE);
+        this.confirmQWrapper = new ProducerQueueWrapper(Config.CONFIRMATION_QUEUE);
 
-        System.out.println("Connected to " + Config.CONFIRMATION_QUEUE + ", receiving messages...");
-
+        System.out.println("Connected to " + Config.BOOKING_QUEUE + ", receiving messages...");
         try {
-            this.send();
-
             synchronized (this) {
-                while (waitForConfirm) {
-                    this.wait(10000);
+                while (true) {
+                    this.wait();
                 }
             }
         } finally {
@@ -52,7 +47,7 @@ public class BookingClient implements MessageListener {
     }
 
     public static void main(String[] args) throws Exception {
-        BookingClient bookingProcessor = new BookingClient();
+        BookingProcessor bookingProcessor = new BookingProcessor();
 
         bookingProcessor.receive();
     }
@@ -65,8 +60,10 @@ public class BookingClient implements MessageListener {
             } else {
                 msgText = msg.toString();
             }
-            System.out.println("Booking request confirmation received: " + msgText);
-            waitForConfirm = false;
+            System.out.println("Booking request Received: " + msgText);
+
+            this.send(msgText + " confirmed");
+
         } catch (Exception jmse) {
             System.err.println("An exception occurred: " + jmse.getMessage());
         }
