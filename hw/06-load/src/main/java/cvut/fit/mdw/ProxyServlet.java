@@ -28,7 +28,7 @@ public class ProxyServlet extends HttpServlet {
         }
         ServerWrapper serverWrapper = url.get();
 
-        System.out.println("Used url for loading is:" + url);
+        System.out.println("Used url for loading is:" + serverWrapper.getServerName());
 
         HttpURLConnection connection = (HttpURLConnection) (new URL(serverWrapper.getServerName())).openConnection();
         // HTTP method
